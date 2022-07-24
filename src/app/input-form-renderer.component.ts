@@ -12,6 +12,7 @@ import { ICellEditorParams } from 'ag-grid-community';
       #input
       style="width: 100%"
       (keyup)="updateValue($event)"
+      required
     />
   </div>`,
 })
@@ -37,8 +38,10 @@ export class InputFormRendererComponent implements ICellEditorAngularComp {
   // If you return true, then the result of the edit will be ignored.
   isCancelAfterEnd() {
     // our editor will reject any value greater than 1000
-    this.params.data.model = this.value;
-    return true;
+    if (this.value) {
+      this.params.data.model = this.value;
+    }
+    return !this.value;
   }
 
   updateValue(event: any) {
